@@ -1,9 +1,15 @@
-export default function HomePage() {
+import { db } from "~/server/db";
+
+export default async function HomePage() {
   const urls = [
     "https://utfs.io/f/717f969c-6534-4954-a2cb-ca26074b0c30-zib4zi.webp",
     "https://utfs.io/f/67cadbf1-d5eb-4416-8599-73f65901f51d-11bysn.webp",
     "https://utfs.io/f/83b5b22f-45d6-480b-af80-f60d7e394c0c-wd646d.webp",
   ];
+
+  const posts = await db.query.posts.findMany();
+
+  console.log(posts);
 
   const mockups = urls.map((url, idx) => ({
     id: idx,
@@ -12,6 +18,12 @@ export default function HomePage() {
 
   return (
     <main className="">
+      {posts?.map((post) => (
+        <div key={post.id} className="mb-4 bg-gray-100 p-4">
+          <h2 className="text-lg font-bold">{post.name}</h2>
+        </div>
+      ))}
+
       <div className="flex flex-wrap gap-x-4">
         {mockups?.map((mockup) => (
           <div key={mockup.id} className="w-48">
