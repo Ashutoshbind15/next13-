@@ -1,36 +1,33 @@
-import Link from "next/link";
-
 export default function HomePage() {
+  const urls = [
+    "https://utfs.io/f/717f969c-6534-4954-a2cb-ca26074b0c30-zib4zi.webp",
+    "https://utfs.io/f/67cadbf1-d5eb-4416-8599-73f65901f51d-11bysn.webp",
+    "https://utfs.io/f/83b5b22f-45d6-480b-af80-f60d7e394c0c-wd646d.webp",
+  ];
+
+  const mockups = urls.map((url, idx) => ({
+    id: idx,
+    url,
+  }));
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-        </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/usage/first-steps"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">First Steps →</h3>
-            <div className="text-lg">
-              Just the basics - Everything you need to know to set up your
-              database and authentication.
-            </div>
-          </Link>
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/introduction"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">Documentation →</h3>
-            <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
-            </div>
-          </Link>
-        </div>
+    <main className="">
+      <div className="flex flex-wrap gap-x-4">
+        {mockups?.map((mockup) => (
+          <div key={mockup.id} className="w-48">
+            <img src={mockup.url} alt="mockup" className="w-full" />
+          </div>
+        ))}
+        {mockups?.map((mockup) => (
+          <div key={mockup.id} className="w-48">
+            <img src={mockup.url} alt="mockup" className="w-full" />
+          </div>
+        ))}
+        {mockups?.map((mockup) => (
+          <div key={mockup.id} className="w-48">
+            <img src={mockup.url} alt="mockup" className="w-full" />
+          </div>
+        ))}
       </div>
     </main>
   );
