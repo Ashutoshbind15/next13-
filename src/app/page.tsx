@@ -1,46 +1,30 @@
-import { db } from "~/server/db";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
+import Image from "next/image";
+import { getImages } from "~/server/queries";
+export const dynamic = "force-dynamic";
 
-export default async function HomePage() {
-  const urls = [
-    "https://utfs.io/f/717f969c-6534-4954-a2cb-ca26074b0c30-zib4zi.webp",
-    "https://utfs.io/f/67cadbf1-d5eb-4416-8599-73f65901f51d-11bysn.webp",
-    "https://utfs.io/f/83b5b22f-45d6-480b-af80-f60d7e394c0c-wd646d.webp",
-  ];
-
-  const posts = await db.query.posts.findMany();
-
-  console.log(posts);
-
-  const mockups = urls.map((url, idx) => ({
-    id: idx,
-    url,
-  }));
-
+const ImageGalleryComponent = async () => {
+  const images = await getImages();
   return (
-    <main className="">
-      {posts?.map((post) => (
-        <div key={post.id} className="mb-4 bg-gray-100 p-4">
-          <h2 className="text-lg font-bold">{post.name}</h2>
+    <div className="flex flex-wrap justify-center gap-x-4">
+      {images?.map((mockup) => (
+        <div key={mockup.id} className="flex w-48 flex-col items-center">
+          <Image src={mockup.url} alt="mockup" width={200} height={200} />
+          <div>{mockup.name}</div>
         </div>
       ))}
+    </div>
+  );
+};
 
-      <div className="flex flex-wrap gap-x-4">
-        {mockups?.map((mockup) => (
-          <div key={mockup.id} className="w-48">
-            <img src={mockup.url} alt="mockup" className="w-full" />
-          </div>
-        ))}
-        {mockups?.map((mockup) => (
-          <div key={mockup.id} className="w-48">
-            <img src={mockup.url} alt="mockup" className="w-full" />
-          </div>
-        ))}
-        {mockups?.map((mockup) => (
-          <div key={mockup.id} className="w-48">
-            <img src={mockup.url} alt="mockup" className="w-full" />
-          </div>
-        ))}
-      </div>
+export default async function HomePage() {
+  return (
+    <main className="">
+      <SignedIn>
+        <ImageGalleryComponent />
+      </SignedIn>
+
+      <SignedOut>Sign in</SignedOut>
     </main>
   );
 }
